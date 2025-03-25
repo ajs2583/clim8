@@ -1,16 +1,5 @@
-# Compiled class file
+# Kotlin-specific
 *.class
-
-# Log file
-*.log
-
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
 *.jar
 *.war
 *.nar
@@ -18,10 +7,55 @@
 *.zip
 *.tar.gz
 *.rar
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+*.log
 hs_err_pid*
 replay_pid*
-
-# Kotlin Gradle plugin data, see https://kotlinlang.org/docs/whatsnew20.html#new-directory-for-kotlin-data-in-gradle-projects
 .kotlin/
+
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+.gradle-cache/
+**/build/
+
+# Kotlin DSL
+*.kts~
+.gradle.kts~
+
+# IntelliJ IDEA & Android Studio
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+captures/
+
+# Android
+*.apk
+*.ap_
+*.dex
+*.so
+*.db
+*.db-shm
+*.db-wal
+*.jks
+*.keystore
+*.hprof
+.cxx/
+
+# Local configuration
+local.properties
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# VS Code (if anyone uses it)
+.vscode/
+
+# MacOS-specific files
+._*
+.Spotlight-V100
+.Trashes
+Icon?
