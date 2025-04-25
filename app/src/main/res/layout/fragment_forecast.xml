@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textForecastTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="7-Day Forecast"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Dummy Forecast Cards -->
+        <include layout="@layout/forecast_card" />
+        <include layout="@layout/forecast_card" />
+        <include layout="@layout/forecast_card" />
+        <include layout="@layout/forecast_card" />
+        <include layout="@layout/forecast_card" />
+        <include layout="@layout/forecast_card" />
+        <include layout="@layout/forecast_card" />
+
+    </LinearLayout>
+</ScrollView>
