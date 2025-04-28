@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"
@@ -11,12 +13,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:navGraph="@navigation/nav_graph"
-        app:defaultNavHost="true" />
+        app:defaultNavHost="true"
+        tools:layout="@layout/fragment_home" />
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/background_dark"
         android:layout_gravity="bottom"
-        app:menu="@menu/bottom_nav_menu" />
+        android:elevation="8dp"
+        app:menu="@menu/bottom_nav_menu"
+        app:itemIconTint="@color/purple_primary"
+        app:itemTextColor="@color/text_secondary" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

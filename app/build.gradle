@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("androidx.navigation.safeargs")
+    id 'kotlin-kapt'
 
 }
 
@@ -57,4 +58,8 @@ dependencies {
     implementation libs.androidx.lifecycle.livedata.ktx
     implementation libs.androidx.lifecycle.viewmodel.ktx
     implementation libs.coil
+    implementation libs.material.v1110
+    implementation libs.androidx.room.runtime
+    kapt libs.androidx.room.compiler
+
 }

@@ -4,26 +4,62 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.google.android.material.slider.Slider
+import com.antand.clim8.databinding.FragmentSettingsBinding
 
 class SettingsFragment : Fragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_settings, container, false)
 
-        val slider = view.findViewById<Slider>(R.id.sliderUpdateFrequency)
-        val label = view.findViewById<TextView>(R.id.labelFrequency)
+    private var _binding: FragmentSettingsBinding? = null
+    private val binding get() = _binding!!
 
-        slider.addOnChangeListener { _, value, _ ->
-            label.text = "Updates every ${value.toInt()} hours"
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val context = requireContext()
+
+        // Load existing settings
+        binding.switchTempUnit.isChecked = SettingsManager.isUsingCelsius(context)
+        binding.switchNotifications.isChecked = SettingsManager.areNotificationsEnabled(context)
+        binding.sliderUpdateFrequency.value = SettingsManager.getUpdateFrequency(context).toFloat()
+        updateFrequencyLabel(SettingsManager.getUpdateFrequency(context))
+
+        // When user toggles temperature unit
+        binding.switchTempUnit.setOnCheckedChangeListener { _, isChecked ->
+            SettingsManager.setUseCelsius(context, isChecked)
         }
 
-        view.findViewById<View>(R.id.btnSaveSettings).setOnClickListener {
-            Toast.makeText(requireContext(), "Settings saved (not really)", Toast.LENGTH_SHORT).show()
+        // When user toggles notifications
+        binding.switchNotifications.setOnCheckedChangeListener { _, isChecked ->
+            SettingsManager.setNotificationsEnabled(context, isChecked)
         }
 
-        return view
+        // When user changes slider
+        binding.sliderUpdateFrequency.addOnChangeListener { _, value, _ ->
+            val hours = value.toInt()
+            SettingsManager.setUpdateFrequency(context, hours)
+            updateFrequencyLabel(hours)
+        }
+
+        // Save button
+        binding.btnSaveSettings.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
+    }
+
+    private fun updateFrequencyLabel(hours: Int) {
+        binding.labelFrequency.text = "Updates every $hours hours"
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
