@@ -32,4 +32,15 @@ object SettingsManager {
 
     fun getUpdateFrequency(context: Context): Int =
         prefs(context).getInt(KEY_UPDATE_FREQUENCY, 6) // Default = 6 hours
+
+    private const val KEY_LAST_CITY = "last_city"
+
+    fun setLastSearchedCity(context: Context, city: String) {
+        prefs(context).edit().putString(KEY_LAST_CITY, city).apply()
+    }
+
+    fun getLastSearchedCity(context: Context): String {
+        return prefs(context).getString(KEY_LAST_CITY, "Flagstaff") ?: "Flagstaff"
+    }
+
 }

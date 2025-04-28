@@ -84,6 +84,7 @@ class HomeFragment : Fragment() {
             val context = requireContext()
             val isCelsius = SettingsManager.isUsingCelsius(context)
 
+
             binding.cityName.apply {
                 text = weather.name
                 visibility = View.VISIBLE
@@ -127,6 +128,10 @@ class HomeFragment : Fragment() {
 
 
             currentCityName = weather.name // Save the searched city
+
+            // Save city to SharedPreferences
+            SettingsManager.setLastSearchedCity(requireContext(), currentCityName!!)
+
 
             // Show Favorite Button
             binding.buttonFavoriteCity.visibility = View.VISIBLE

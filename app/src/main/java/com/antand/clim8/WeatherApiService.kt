@@ -12,4 +12,13 @@ interface WeatherApiService {
         @Query("units") units: String = "metric"
     ): Response<WeatherResponse>
 
+    @GET("forecast")
+    suspend fun getFiveDayForecast(
+        @Query("q") cityName: String,
+        @Query("appid") apiKey: String,
+        @Query("units") units: String = "metric"
+    ): FiveDayForecastResponse
+
+
+
 }

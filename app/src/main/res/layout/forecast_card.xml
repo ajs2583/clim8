@@ -1,11 +1,12 @@
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
     card_view:cardCornerRadius="12dp"
     card_view:cardElevation="4dp"
-    card_view:cardBackgroundColor="@color/card_background"> <!-- ✅ Dark card background -->
+    card_view:cardBackgroundColor="@color/card_background">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,22 +15,45 @@
         android:padding="16dp"
         android:gravity="center_vertical">
 
-        <TextView
-            android:id="@+id/textDay"
+        <!-- 🌤️ Weather Icon -->
+        <ImageView
+            android:id="@+id/imageViewWeatherIcon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="12dp"
+            android:contentDescription="Weather Icon" />
+
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Monday"
-            android:textColor="@color/text_primary"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textWeather"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Sunny, 72°F"
-            android:textColor="@color/text_secondary"
-            android:textSize="16sp" />
+            <TextView
+                android:id="@+id/textViewDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Monday"
+                android:textColor="@color/text_primary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewTemp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="High: 70°F / Low: 50°F"
+                android:textColor="@color/text_secondary"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textViewDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sunny"
+                android:textColor="@color/text_secondary"
+                android:textSize="16sp" />
+        </LinearLayout>
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>
