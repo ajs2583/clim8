@@ -1,104 +1,185 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:padding="24dp">
+    android:background="@color/background_dark"
+    android:fillViewport="true">
 
-    <!-- Banner Title -->
-    <TextView
-        android:id="@+id/bannerTitle"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Clim8"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:background="?attr/colorPrimary"
-        android:textColor="@android:color/white"
-        android:paddingVertical="8dp"
-        android:elevation="4dp" />
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="24dp">
 
-    <!-- Section Title -->
-    <TextView
-        android:id="@+id/textTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Weather Lookup"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="16dp" />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:visibility="gone" />
-
-    <!-- City Name (API result) -->
-    <TextView
-        android:id="@+id/cityName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="20sp"
-        android:visibility="gone" />
-
-    <!-- Temperature (API result) -->
-    <TextView
-        android:id="@+id/tempText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="18sp"
-        android:layout_marginTop="8dp"
-        android:visibility="gone" />
-
-    <!-- Description (API result) -->
-    <TextView
-        android:id="@+id/descText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="18sp"
-        android:layout_marginTop="4dp"
-        android:visibility="gone" />
-
-    <ImageView
-        android:id="@+id/weatherIcon"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="16dp"
-        android:contentDescription="Weather icon"
-        android:visibility="gone" />
-
-    <!-- City Input -->
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter city name"
-        app:boxBackgroundMode="outline"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-        android:layout_marginTop="24dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextCity"
+        <!-- Banner Title -->
+        <TextView
+            android:id="@+id/bannerTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:background="@color/purple_primary"
+            android:text="Clim8"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            android:paddingVertical="12dp"
+            android:elevation="4dp" />
 
-    <!-- Button -->
-    <Button
-        android:id="@+id/buttonGetWeather"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Get Weather"
-        android:layout_marginTop="16dp" />
+        <!-- Section Title -->
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Weather Lookup"
+            android:textColor="@color/text_primary"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp" />
 
-</LinearLayout>
+        <!-- City Input -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter city name"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="@color/purple_primary"
+            app:hintTextColor="@color/text_secondary"
+            android:layout_marginBottom="8dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Get Weather Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonGetWeather"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Get Weather"
+            android:backgroundTint="@color/purple_primary"
+            android:textColor="@color/text_primary"
+            android:layout_marginTop="8dp" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:visibility="gone" />
+
+        <!-- Weather Results Group -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="16dp">
+
+            <TextView
+                android:id="@+id/cityName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_primary"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tempText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_primary"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:layout_marginTop="4dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/descText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_secondary"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:layout_marginTop="2dp"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/weatherIcon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="8dp"
+                android:contentDescription="Weather icon"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/humidityText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_secondary"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:layout_marginTop="4dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/pressureText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_secondary"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:layout_marginTop="2dp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/windSpeedText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_secondary"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:layout_marginTop="2dp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <!-- Favorite Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonFavoriteCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Favorite This City"
+            android:backgroundTint="@color/purple_primary"
+            android:textColor="@color/text_primary"
+            android:layout_marginTop="16dp"
+            android:visibility="gone" />
+
+        <!-- Favorites Title -->
+        <TextView
+            android:id="@+id/textFavoritesTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Favorites"
+            android:textColor="@color/text_primary"
+            android:textSize="20sp"
+            android:layout_marginTop="32dp"
+            android:visibility="gone" />
+
+        <!-- Favorites RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerFavorites"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
+</ScrollView>
