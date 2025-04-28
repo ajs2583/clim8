@@ -10,21 +10,9 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:padding="24dp">
+        android:padding="24dp"
+        android:layout_marginTop="48dp">
 
-        <!-- Banner Title -->
-        <TextView
-            android:id="@+id/bannerTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/purple_primary"
-            android:text="Clim8"
-            android:gravity="center"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="@color/text_primary"
-            android:paddingVertical="12dp"
-            android:elevation="4dp" />
 
         <!-- Section Title -->
         <TextView
