@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.antand.clim8.databinding.ForecastCardBinding
+import coil.load
 import java.text.SimpleDateFormat
 import java.util.*
-import coil.load
 
 class ForecastAdapter(private var forecastList: List<DailyForecast>) :
     RecyclerView.Adapter<ForecastAdapter.ForecastViewHolder>() {
@@ -29,36 +29,22 @@ class ForecastAdapter(private var forecastList: List<DailyForecast>) :
         holder.binding.textViewDate.text = dateFormat.format(date)
 
         val isCelsius = SettingsManager.isUsingCelsius(context)
-
-        val highTemp = if (isCelsius) {
-            forecast.temp.max.toInt()
-        } else {
-            celsiusToFahrenheit(forecast.temp.max)
-        }
-
-        val lowTemp = if (isCelsius) {
-            forecast.temp.min.toInt()
-        } else {
-            celsiusToFahrenheit(forecast.temp.min)
-        }
+        val highTemp = if (isCelsius) forecast.temp.max.toInt() else TemperatureUtils.celsiusToFahrenheit(forecast.temp.max)
+        val lowTemp = if (isCelsius) forecast.temp.min.toInt() else TemperatureUtils.celsiusToFahrenheit(forecast.temp.min)
 
         holder.binding.textViewTemp.text = "High: $highTemp° / Low: $lowTemp°"
+        holder.binding.textViewDescription.text = forecast.weather.firstOrNull()?.description ?: ""
 
-        holder.binding.textViewDescription.text = forecast.weather[0].description
-
-        val iconCode = forecast.weather[0].icon
+        val iconCode = forecast.weather.firstOrNull()?.icon ?: ""
         val iconUrl = "https://openweathermap.org/img/wn/${iconCode}@2x.png"
         holder.binding.imageViewWeatherIcon.load(iconUrl)
 
-        // 🌟 FADE-IN ANIMATION
         holder.itemView.alpha = 0f
         holder.itemView.animate()
             .alpha(1f)
-            .setDuration(500) // 0.5 seconds fade
+            .setDuration(500)
             .start()
     }
-
-
 
     override fun getItemCount() = forecastList.size
 
@@ -67,7 +53,6 @@ class ForecastAdapter(private var forecastList: List<DailyForecast>) :
         notifyDataSetChanged()
     }
 
-    // 🌟 NEW method for 5-day 3-hour forecast response
     fun updateDataFromFiveDay(newList: List<ForecastItem>) {
         forecastList = newList.map { daily ->
             DailyForecast(
@@ -83,9 +68,5 @@ class ForecastAdapter(private var forecastList: List<DailyForecast>) :
         }
         notifyDataSetChanged()
     }
-
-    private fun celsiusToFahrenheit(celsius: Float): Int {
-        return ((celsius * 9 / 5) + 32).toInt()
-    }
-
 }
+
