@@ -1,11 +1,11 @@
 package com.antand.clim8
 
 data class WeatherResponse(
-    val coord: Coord, // ✅ Add this line
+    val coord: Coord,
     val name: String,
     val main: Main,
     val weather: List<Weather>,
-    val wind: Wind // ✅ Also make sure you added Wind earlier for the forecast polish
+    val wind: Wind
 )
 
 data class Coord(
