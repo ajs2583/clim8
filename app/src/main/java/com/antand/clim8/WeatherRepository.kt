@@ -1,13 +1,14 @@
 package com.antand.clim8
 
 class WeatherRepository {
+
     private val api = RetrofitClient.instance
-    private val apiKey = "136e9be3e4d8cd6a52fa2c7109282ab1" // ✅ Your OpenWeatherMap API key
 
-    suspend fun getWeather(city: String) = api.getCurrentWeather(city, apiKey, units = "metric")
+    private val apiKey = "136e9be3e4d8cd6a52fa2c7109282ab1"
 
-    suspend fun getFiveDayForecast(city: String): FiveDayForecastResponse {
-        return api.getFiveDayForecast(cityName = city, apiKey = apiKey, units = "metric")
-    }
+    suspend fun getWeather(city: String) =
+        api.getCurrentWeather(city, apiKey)
 
+    suspend fun getFiveDayForecast(city: String): FiveDayForecastResponse =
+        api.getFiveDayForecast(city, apiKey)
 }
