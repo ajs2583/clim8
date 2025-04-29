@@ -1,4 +1,4 @@
-package com.antand.clim8.util
+package com.antand.clim8
 
 object TemperatureUtils {
     fun celsiusToFahrenheit(celsius: Float): Int {
