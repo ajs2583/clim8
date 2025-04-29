@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.antand.clim8.databinding.ForecastCardBinding
+import com.antand.clim8.TemperatureConverter
 import coil.load
 import java.text.SimpleDateFormat
 import java.util.*
