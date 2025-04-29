@@ -29,8 +29,18 @@ class ForecastAdapter(private var forecastList: List<DailyForecast>) :
         holder.binding.textViewDate.text = dateFormat.format(date)
 
         val isCelsius = SettingsManager.isUsingCelsius(context)
-        val highTemp = if (isCelsius) forecast.temp.max.toInt() else TemperatureUtils.celsiusToFahrenheit(forecast.temp.max)
-        val lowTemp = if (isCelsius) forecast.temp.min.toInt() else TemperatureUtils.celsiusToFahrenheit(forecast.temp.min)
+
+        val highTemp = if (isCelsius) {
+            forecast.temp.max.toInt()
+        } else {
+            TemperatureConverter.celsiusToFahrenheit(forecast.temp.max)
+        }
+
+        val lowTemp = if (isCelsius) {
+            forecast.temp.min.toInt()
+        } else {
+            TemperatureConverter.celsiusToFahrenheit(forecast.temp.min)
+        }
 
         holder.binding.textViewTemp.text = "High: $highTemp° / Low: $lowTemp°"
         holder.binding.textViewDescription.text = forecast.weather.firstOrNull()?.description ?: ""
@@ -69,4 +79,3 @@ class ForecastAdapter(private var forecastList: List<DailyForecast>) :
         notifyDataSetChanged()
     }
 }
-
