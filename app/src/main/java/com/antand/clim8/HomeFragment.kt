@@ -75,7 +75,11 @@ class HomeFragment : Fragment() {
             val isCelsius = SettingsManager.isUsingCelsius(context)
 
             binding.cityName.text = weather.name
-            binding.tempText.text = if (isCelsius) "${weather.main.temp}°C" else "${TemperatureUtils.celsiusToFahrenheit(weather.main.temp)}°F"
+            binding.tempText.text = if (isCelsius) {
+                "${weather.main.temp}°C"
+            } else {
+                "${TemperatureConverter.celsiusToFahrenheit(weather.main.temp)}°F"
+            }
             binding.descText.text = weather.weather.firstOrNull()?.description ?: ""
             binding.weatherIcon.load("https://openweathermap.org/img/wn/${weather.weather.firstOrNull()?.icon}@2x.png")
             binding.humidityText.text = "Humidity: ${weather.main.humidity}%"
