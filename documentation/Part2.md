@@ -72,5 +72,8 @@
 
 ### Class Diagram
 ![Class Diagram](docs/clim8_class_diagram.png)
-### Use-Case Diagram
-![Use-Case Diagram](docs/clim8_use_case.png)
+
+---
+
+### Use Case Diagram
+![Use Case Diagram](docs/clim8_use_case.png)
