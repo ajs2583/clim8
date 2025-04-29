@@ -9,6 +9,8 @@ class WeatherRepository {
     suspend fun getWeather(city: String) =
         api.getCurrentWeather(city, apiKey, units = "metric")
 
-    suspend fun getFiveDayForecast(city: String): FiveDayForecastResponse =
-        api.getFiveDayForecast(city, apiKey, units = "metric")
+    suspend fun getFiveDayForecast(city: String): FiveDayForecastResponse {
+        return api.getFiveDayForecast(cityName = city, apiKey = apiKey, units = "metric")
+    }
+
 }
