@@ -3,13 +3,12 @@ package com.antand.clim8
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.antand.clim8.databinding.ForecastCardBinding
-import com.antand.clim8.TemperatureConverter
 import coil.load
+import com.antand.clim8.databinding.ForecastCardBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
-class ForecastAdapter(private var forecastList: List<DailyForecast>) :
+class ForecastAdapter(private var forecastList: List<ForecastItem>) :
     RecyclerView.Adapter<ForecastAdapter.ForecastViewHolder>() {
 
     inner class ForecastViewHolder(val binding: ForecastCardBinding) :
@@ -24,59 +23,49 @@ class ForecastAdapter(private var forecastList: List<DailyForecast>) :
         val forecast = forecastList[position]
         val context = holder.binding.root.context
 
-        val date = Date(forecast.dt * 1000)
-        val dateFormat = SimpleDateFormat("EEE, MMM d", Locale.getDefault())
+        // Format date
+        val inputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("EEE, MMM d", Locale.getDefault())
+        val date = inputFormat.parse(forecast.dt_txt)
+        holder.binding.textViewDate.text = date?.let { outputFormat.format(it) } ?: forecast.dt_txt
 
-        holder.binding.textViewDate.text = dateFormat.format(date)
-
+        // Temperature conversion
         val isCelsius = SettingsManager.isUsingCelsius(context)
-
-        val highTemp = if (isCelsius) {
-            forecast.temp.max.toInt()
+        val temp = if (isCelsius) {
+            forecast.main.temp.toInt()
         } else {
-            TemperatureConverter.celsiusToFahrenheit(forecast.temp.max)
+            TemperatureConverter.celsiusToFahrenheit(forecast.main.temp)
         }
 
-        val lowTemp = if (isCelsius) {
-            forecast.temp.min.toInt()
+        val tempMin = if (isCelsius) {
+            forecast.main.temp_min.toInt()
         } else {
-            TemperatureConverter.celsiusToFahrenheit(forecast.temp.min)
+            TemperatureConverter.celsiusToFahrenheit(forecast.main.temp_min)
         }
 
-        holder.binding.textViewTemp.text = "High: $highTemp° / Low: $lowTemp°"
+        val tempMax = if (isCelsius) {
+            forecast.main.temp_max.toInt()
+        } else {
+            TemperatureConverter.celsiusToFahrenheit(forecast.main.temp_max)
+        }
+
+        holder.binding.textViewTemp.text = "High: $tempMax° / Low: $tempMin°"
         holder.binding.textViewDescription.text = forecast.weather.firstOrNull()?.description ?: ""
 
+        // Icon
         val iconCode = forecast.weather.firstOrNull()?.icon ?: ""
         val iconUrl = "https://openweathermap.org/img/wn/${iconCode}@2x.png"
         holder.binding.imageViewWeatherIcon.load(iconUrl)
 
+        // Animation
         holder.itemView.alpha = 0f
-        holder.itemView.animate()
-            .alpha(1f)
-            .setDuration(500)
-            .start()
+        holder.itemView.animate().alpha(1f).setDuration(500).start()
     }
 
     override fun getItemCount() = forecastList.size
 
-    fun updateData(newForecastList: List<DailyForecast>) {
+    fun updateData(newForecastList: List<ForecastItem>) {
         forecastList = newForecastList
-        notifyDataSetChanged()
-    }
-
-    fun updateDataFromFiveDay(newList: List<ForecastItem>) {
-        forecastList = newList.map { daily ->
-            DailyForecast(
-                dt = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-                    .parse(daily.dt_txt)?.time?.div(1000) ?: 0L,
-                temp = Temp(
-                    day = daily.main.temp,
-                    min = daily.main.temp_min,
-                    max = daily.main.temp_max
-                ),
-                weather = daily.weather
-            )
-        }
         notifyDataSetChanged()
     }
 }

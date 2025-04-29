@@ -39,7 +39,7 @@ class ForecastFragment : Fragment() {
                 .filterIndexed { index, _ -> index % 8 == 0 }
                 .take(7)
 
-            adapter.updateDataFromFiveDay(simplifiedForecasts)
+            adapter.updateData(simplifiedForecasts)
         }
     }
 

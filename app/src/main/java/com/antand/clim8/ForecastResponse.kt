@@ -5,7 +5,7 @@ data class ForecastResponse(
 )
 
 data class DailyForecast(
-    val dt: Long,
+    val dt: Long, // timestamp
     val temp: Temp,
     val weather: List<Weather>
 )

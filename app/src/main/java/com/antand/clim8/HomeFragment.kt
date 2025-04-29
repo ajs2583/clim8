@@ -24,7 +24,10 @@ class HomeFragment : Fragment() {
 
     private var currentCityName: String? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -34,35 +37,32 @@ class HomeFragment : Fragment() {
 
         database = FavoriteCityDatabase.getDatabase(requireContext())
 
-        adapter = FavoriteCityAdapter(
-            emptyList(),
-            onCityClicked = { cityName ->
-                showLoading(true)
-                viewModel.fetchWeather(cityName)
+        adapter = FavoriteCityAdapter(emptyList(),
+            onCityClicked = { city ->
+                binding.editTextCity.setText(city)
+                fetchWeather(city)
             },
-            onDeleteClicked = { favoriteCity ->
+            onDeleteClicked = { favorite ->
                 lifecycleScope.launch {
-                    database.favoriteCityDao().delete(favoriteCity)
-                    Toast.makeText(requireContext(), "${favoriteCity.cityName} removed from favorites", Toast.LENGTH_SHORT).show()
+                    database.favoriteCityDao().delete(favorite)
+                    Toast.makeText(requireContext(), "${favorite.cityName} removed from favorites", Toast.LENGTH_SHORT).show()
                 }
-            }
-        )
+            })
 
         binding.recyclerFavorites.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerFavorites.adapter = adapter
 
         database.favoriteCityDao().getAllFavorites().observe(viewLifecycleOwner) { favorites ->
-            binding.textFavoritesTitle.visibility = if (favorites.isNotEmpty()) View.VISIBLE else View.GONE
-            binding.recyclerFavorites.visibility = if (favorites.isNotEmpty()) View.VISIBLE else View.GONE
+            val visible = favorites.isNotEmpty()
+            binding.textFavoritesTitle.visibility = if (visible) View.VISIBLE else View.GONE
+            binding.recyclerFavorites.visibility = if (visible) View.VISIBLE else View.GONE
             adapter.updateData(favorites)
         }
 
         binding.buttonGetWeather.setOnClickListener {
             val city = binding.editTextCity.text.toString().trim()
             if (city.isNotEmpty()) {
-                showLoading(true)
-                viewModel.fetchWeather(city)
-                Toast.makeText(requireContext(), "Fetching weather for $city", Toast.LENGTH_SHORT).show()
+                fetchWeather(city)
             } else {
                 Toast.makeText(requireContext(), "Please enter a city name", Toast.LENGTH_SHORT).show()
             }
@@ -76,19 +76,31 @@ class HomeFragment : Fragment() {
 
             binding.cityName.text = weather.name
             binding.tempText.text = if (isCelsius) {
-                "${weather.main.temp}°C"
+                "${weather.main.temp.toInt()}°C"
             } else {
-                "${TemperatureConverter.celsiusToFahrenheit(weather.main.temp)}°F"
+                "${celsiusToFahrenheit(weather.main.temp)}°F"
             }
+
             binding.descText.text = weather.weather.firstOrNull()?.description ?: ""
             binding.weatherIcon.load("https://openweathermap.org/img/wn/${weather.weather.firstOrNull()?.icon}@2x.png")
             binding.humidityText.text = "Humidity: ${weather.main.humidity}%"
             binding.pressureText.text = "Pressure: ${weather.main.pressure} hPa"
             binding.windSpeedText.text = "Wind Speed: ${weather.wind.speed} m/s"
 
-            binding.buttonFavoriteCity.visibility = View.VISIBLE
+            // Show UI elements
+            listOf(
+                binding.cityName,
+                binding.tempText,
+                binding.descText,
+                binding.weatherIcon,
+                binding.humidityText,
+                binding.pressureText,
+                binding.windSpeedText,
+                binding.buttonFavoriteCity
+            ).forEach { it.visibility = View.VISIBLE }
+
             currentCityName = weather.name
-            SettingsManager.setLastSearchedCity(requireContext(), weather.name)
+            SettingsManager.setLastSearchedCity(requireContext(), currentCityName!!)
         }
 
         viewModel.error.observe(viewLifecycleOwner) { errorMsg ->
@@ -99,23 +111,39 @@ class HomeFragment : Fragment() {
         }
 
         binding.buttonFavoriteCity.setOnClickListener {
-            currentCityName?.let { cityName ->
+            currentCityName?.let { city ->
                 lifecycleScope.launch {
-                    val exists = database.favoriteCityDao().cityExists(cityName)
+                    val exists = database.favoriteCityDao().cityExists(city)
                     if (exists == 0) {
-                        val favorite = FavoriteCity(cityName = cityName)
-                        database.favoriteCityDao().insert(favorite)
-                        Toast.makeText(requireContext(), "$cityName added to favorites!", Toast.LENGTH_SHORT).show()
+                        database.favoriteCityDao().insert(FavoriteCity(cityName = city))
+                        Toast.makeText(requireContext(), "$city added to favorites!", Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(requireContext(), "$cityName is already in favorites!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "$city is already a favorite", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
         }
+
+        // Auto-load last city
+        val lastCity = SettingsManager.getLastSearchedCity(requireContext())
+        if (lastCity.isNotBlank()) {
+            binding.editTextCity.setText(lastCity)
+            fetchWeather(lastCity)
+        }
+    }
+
+    private fun fetchWeather(city: String) {
+        showLoading(true)
+        viewModel.fetchWeather(city)
+        Toast.makeText(requireContext(), "Fetching weather for $city", Toast.LENGTH_SHORT).show()
     }
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun celsiusToFahrenheit(celsius: Float): Int {
+        return ((celsius * 9 / 5) + 32).toInt()
     }
 
     override fun onDestroyView() {
