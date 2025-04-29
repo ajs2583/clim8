@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antand.clim8.databinding.FragmentForecastBinding
-import android.util.Log
 
 class ForecastFragment : Fragment() {
 
@@ -18,10 +17,7 @@ class ForecastFragment : Fragment() {
 
     private lateinit var adapter: ForecastAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentForecastBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -34,24 +30,22 @@ class ForecastFragment : Fragment() {
         binding.recyclerForecast.adapter = adapter
 
         val cityName = SettingsManager.getLastSearchedCity(requireContext())
-
         binding.textViewCityName.text = cityName
 
-        // Fetch free 5-day forecast
         viewModel.fetchFiveDayForecast(cityName)
 
         viewModel.fiveDayForecast.observe(viewLifecycleOwner) { forecastResponse ->
-            // Show only 7 items max (or whatever available)
-            val simplifiedForecasts = forecastResponse.list.filterIndexed { index, _ -> index % 8 == 0 }.take(7)
+            val simplifiedForecasts = forecastResponse.list
+                .filterIndexed { index, _ -> index % 8 == 0 }
+                .take(7)
+
             adapter.updateDataFromFiveDay(simplifiedForecasts)
         }
-
-
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 }
+
