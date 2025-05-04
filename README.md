@@ -44,15 +44,11 @@ Clim8 uses the **MVVM (Model-View-ViewModel)** pattern to ensure separation of c
 
 ## 📱 Screenshots
 
-### 🏠 Home Screen
-![Home Screen](screenshots/homefrag.png)
-
-### 📊 Forecast Screen
-![Forecast Screen](screenshots/forecastfrag.png)
-
-### ⚙️ Settings Screen
-![Settings Screen](screenshots/settingsfrag.png)
-
+<p align="center">
+  <img src="screenshots/homefrag.png" alt="Home" width="200" style="margin-right: 10px;">
+  <img src="screenshots/forecastfrag.png" alt="Forecast" width="200" style="margin-right: 10px;">
+  <img src="screenshots/settingsfrag.png" alt="Settings" width="200">
+</p>
 
 
 ---
