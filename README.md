@@ -1,35 +1,84 @@
 # 🌤️ Clim8
 
-Clim8 is a modern and lightweight Android weather app built with Kotlin and Android Studio. It provides users with accurate, real-time weather information in a clean and intuitive interface.
+Clim8 is a modern, lightweight Android weather app built using Kotlin. It gives users accurate, real-time weather information through a clean, responsive UI. Designed with Jetpack libraries and a robust MVVM architecture, Clim8 is ideal for anyone wanting a simple yet powerful weather experience.
+
+---
 
 ## 🚀 Features
 
-- 🌍 Get current weather by location or city name
-- 📍 GPS-based weather data
-- 🕒 Real-time temperature, humidity, wind speed, and condition info
-- 🌅 Sunrise and sunset times
-- 🎨 Clean and responsive UI with XML layouts
-- 🌐 Built using a RESTful weather API (e.g., OpenWeatherMap)
+- 🔍 Search weather by city name
+- 📍 GPS-based current location weather
+- 🌡️ Displays temperature, humidity, wind speed, pressure, and conditions
+- 🌇 Shows sunrise and sunset times
+- 🎨 Modern, XML-based UI design with dark mode support
+- 🔄 Real-time 5-day forecast (3-hour intervals)
+- ❤️ Save favorite cities and quickly access them
+- ⚙️ Settings panel with update frequency, unit preference, and notifications toggle
 
-## 📱 Screenshots
+---
 
-*Coming soon*
+## 🧱 Architecture
+
+Clim8 uses the **MVVM (Model-View-ViewModel)** pattern to ensure separation of concerns and scalability:
+
+- **View (Fragments):** `HomeFragment`, `ForecastFragment`, `SettingsFragment`
+- **ViewModel:** `WeatherViewModel`
+- **Model/Repository Layer:** `WeatherRepository`, `FavoriteCityDatabase`
+- **Remote API:** `WeatherApiService` via Retrofit
+- **Persistence:** Room database for favorite cities
+- **Utilities:** `SettingsManager`, `TemperatureConverter`
+
+---
 
 ## 🛠️ Built With
 
 - **Kotlin** – Main programming language
-- **Kotlin DSL** – For Gradle build configuration
-- **Android Studio** – Development environment
-- **XML** – Layout and UI design
-- **Jetpack Libraries** – (e.g., ViewModel, LiveData, Navigation)
-- **Retrofit** – For networking
-- **Glide** or **Coil** – For image loading
-- **OpenWeatherMap API** – For weather data
+- **Groovy DSL** – For Gradle configuration
+- **Jetpack Components** – ViewModel, LiveData, Room, Navigation
+- **Retrofit2** – For API calls
+- **Coil** – Image loading for weather icons
+- **OpenWeatherMap API** – Real-time weather data
+- **Room** – Local storage for favorite cities
+
+---
+
+## 📱 Screenshots
+
+<p align="center">
+  <img src="screenshots/homefrag.png" alt="Home" width="200" style="margin-right: 10px;">
+  <img src="screenshots/forecastfrag.png" alt="Forecast" width="200" style="margin-right: 10px;">
+  <img src="screenshots/settingsfrag.png" alt="Settings" width="200">
+</p>
+
+
+---
 
 ## 📦 Getting Started
 
-1. **Clone the repository:**
+### ✅ Prerequisites
 
+- Android Studio Flamingo+ (or latest stable version)
+- Android Emulator or physical device (API 26+)
+- Free API key from [OpenWeatherMap](https://openweathermap.org/api)
+
+### 📥 Installation Steps
+
+1. **Clone the repository:**
    ```bash
    git clone https://github.com/ajs2583/clim8.git
    cd clim8
+2. Open in Android Studio:
+   - Open Android Studio → File > Open → Select the project folder
+3. Insert your API key:
+   - In your local.properties file, add:
+        ```ini
+        OPENWEATHER_API_KEY=your_api_key_here
+        ```
+4. Build and run the app:
+   - Press the green Run ▶️ button or use Shift + F10
+
+---
+
+## 📫 Contact
+Developed by Anthony Mastrangelo (@ajmastra) and Andrew Sliva (@ajs2583)
+

@@ -1,4 +1,4 @@
-package com.antand.clim8
+package com.antand.clim8.data.models
 
 data class FiveDayForecastResponse(
     val list: List<ForecastItem>

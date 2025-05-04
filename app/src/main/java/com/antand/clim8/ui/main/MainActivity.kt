@@ -1,9 +1,10 @@
-package com.antand.clim8
+package com.antand.clim8.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.antand.clim8.R
 import com.antand.clim8.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

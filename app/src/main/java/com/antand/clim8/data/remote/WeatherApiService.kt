@@ -1,5 +1,7 @@
-package com.antand.clim8
+package com.antand.clim8.data.remote
 
+import com.antand.clim8.data.models.FiveDayForecastResponse
+import com.antand.clim8.data.models.WeatherResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
