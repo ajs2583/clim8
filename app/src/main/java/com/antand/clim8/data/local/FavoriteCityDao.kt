@@ -1,7 +1,8 @@
-package com.antand.clim8
+package com.antand.clim8.data.local
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import com.antand.clim8.data.models.FavoriteCity
 
 @Dao
 interface FavoriteCityDao {

@@ -1,4 +1,7 @@
-package com.antand.clim8
+package com.antand.clim8.data.repository
+
+import com.antand.clim8.data.models.FiveDayForecastResponse
+import com.antand.clim8.data.remote.RetrofitClient
 
 class WeatherRepository {
 

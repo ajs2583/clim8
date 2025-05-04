@@ -1,4 +1,4 @@
-package com.antand.clim8
+package com.antand.clim8.data.remote
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

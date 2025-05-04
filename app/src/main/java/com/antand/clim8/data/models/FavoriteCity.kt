@@ -1,4 +1,4 @@
-package com.antand.clim8
+package com.antand.clim8.data.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
